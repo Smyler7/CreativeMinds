@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Minds | Tech Services</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom Config & Styles -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#0f172a',
+                            accent: '#6366f1', // Indigo
+                            glow: '#a855f7', // Purple
+                        }
+                    },
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #475569; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6366f1; 
+        }
+
+        /* Glassmorphism utilities */
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-brand-dark text-slate-300 font-sans overflow-x-hidden selection:bg-brand-accent selection:text-white">
+
+    <!-- BACKGROUND ANIMATION (Fixed) -->
+    <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-brand-accent rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div class="absolute top-0 right-1/4 w-96 h-96 bg-brand-glow rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+        <div class="absolute -bottom-32 left-1/3 w-96 h-96 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="fixed w-full z-50 transition-all duration-300 glass" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <div class="w-8 h-8 bg-gradient-to-tr from-brand-accent to-brand-glow rounded-lg flex items-center justify-center text-white font-bold">
+                        CM
+                    </div>
+                    <span class="font-bold text-xl text-white tracking-tight">Creative Minds</span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="#about" class="text-slate-300 hover:text-white transition-colors text-sm font-medium">Philosophy</a>
+                    <a href="#services" class="text-slate-300 hover:text-white transition-colors text-sm font-medium">Services</a>
+                    <a href="#stack" class="text-slate-300 hover:text-white transition-colors text-sm font-medium">Tech Stack</a>
+                    <a href="#process" class="text-slate-300 hover:text-white transition-colors text-sm font-medium">Process</a>
+                </div>
+
+                <!-- CTA Button - UPDATED MAILTO LINK -->
+                <div class="hidden md:block">
+                    <a href="mailto:helatinotenda70@gmail.com?subject=Project%20Inquiry" class="px-5 py-2.5 rounded-full bg-white text-brand-dark font-semibold text-sm hover:bg-brand-accent hover:text-white transition-all transform hover:scale-105">
+                        Start a Project
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden glass border-t border-gray-700 absolute w-full">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-white/10">Philosophy</a>
+                <a href="#services" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-white/10">Services</a>
+                <a href="#stack" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-white/10">Tech Stack</a>
+                <a href="#process" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-white/10">Process</a>
+                <!-- Mobile CTA - UPDATED MAILTO LINK -->
+                <a href="mailto:helatinotenda70@gmail.com?subject=Project%20Inquiry" class="block px-3 py-2 mt-4 text-center rounded-md text-base font-bold bg-brand-accent text-white">Start Project</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="relative z-10 pt-32 pb-20 lg:pt-48 lg:pb-32 px-4 max-w-7xl mx-auto flex flex-col items-center text-center">
+        <div class="inline-flex items-center px-3 py-1 rounded-full border border-brand-accent/30 bg-brand-accent/10 text-brand-accent text-xs font-medium mb-6 animate-fade-in-up">
+            <span class="w-2 h-2 rounded-full bg-brand-accent mr-2 animate-pulse"></span>
+            Accepting New Clients for 2025
+        </div>
+        
+        <h1 class="text-5xl md:text-7xl font-extrabold text-white tracking-tight mb-6 animate-fade-in-up" style="animation-delay: 0.1s;">
+            Where Logic Meets <br/>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-brand-glow">Imagination.</span>
+        </h1>
+        
+        <p class="mt-4 max-w-2xl text-lg md:text-xl text-slate-400 mb-10 animate-fade-in-up" style="animation-delay: 0.2s;">
+            We don’t just write code; we engineer digital ecosystems. We bridge the gap between abstract ideas and tangible results for startups and enterprises.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 animate-fade-in-up" style="animation-delay: 0.3s;">
+            <!-- Main CTA - UPDATED MAILTO LINK -->
+            <a href="mailto:helatinotenda70@gmail.com?subject=Discovery%20Call%20Request" class="px-8 py-4 rounded-lg bg-gradient-to-r from-brand-accent to-brand-glow text-white font-bold text-lg hover:shadow-lg hover:shadow-brand-accent/50 transition-all transform hover:-translate-y-1">
+                Book Discovery Call
+            </a>
+            <a href="#services" class="px-8 py-4 rounded-lg glass text-white font-semibold text-lg hover:bg-white/10 transition-all">
+                Explore Services
+            </a>
+        </div>
+
+        <!-- Hero Stats -->
+        <div class="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 w-full max-w-4xl border-t border-slate-800 pt-10 animate-fade-in-up" style="animation-delay: 0.5s;">
+            <div>
+                <div class="text-3xl font-bold text-white">50+</div>
+                <div class="text-sm text-slate-500">Products Launched</div>
+            </div>
+            <div>
+                <div class="text-3xl font-bold text-white">98%</div>
+                <div class="text-sm text-slate-500">Client Retention</div>
+            </div>
+            <div>
+                <div class="text-3xl font-bold text-white">24/7</div>
+                <div class="text-sm text-slate-500">System Uptime</div>
+            </div>
+            <div>
+                <div class="text-3xl font-bold text-white">100%</div>
+                <div class="text-sm text-slate-500">Agile Process</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PHILOSOPHY / ABOUT SECTION -->
+    <section id="about" class="relative z-10 py-20 bg-slate-900/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="reveal">
+                    <h2 class="text-brand-accent font-semibold tracking-wide uppercase text-sm mb-2">Our Philosophy</h2>
+                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-6">Design is not just what it looks like. It's how it works.</h3>
+                    <div class="space-y-4 text-slate-400">
+                        <p>
+                            Before a single line of code is written, we ensure we are solving the right problem for the right people. 
+                        </p>
+                        <p>
+                            Our multidisciplinary team combines data-driven strategy with world-class design and engineering to build products that scale. We believe in "Human-Centric" development—building technology that adapts to people, not the other way around.
+                        </p>
+                    </div>
+                    <div class="mt-8 flex items-center gap-4">
+                        <div class="flex -space-x-4">
+                            <img class="w-10 h-10 rounded-full border-2 border-slate-900" src="https://i.pravatar.cc/100?img=1" alt="Team">
+                            <img class="w-10 h-10 rounded-full border-2 border-slate-900" src="https://i.pravatar.cc/100?img=5" alt="Team">
+                            <img class="w-10 h-10 rounded-full border-2 border-slate-900" src="https://i.pravatar.cc/100?img=8" alt="Team">
+                            <div class="w-10 h-10 rounded-full border-2 border-slate-900 bg-slate-700 flex items-center justify-center text-xs text-white">+12</div>
+                        </div>
+                        <span class="text-sm text-slate-400">Join our growing team</span>
+                    </div>
+                </div>
+                <div class="reveal relative">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-brand-accent to-purple-600 rounded-2xl transform rotate-3 blur-lg opacity-30"></div>
+                    <div class="relative bg-slate-800 border border-slate-700 rounded-2xl p-8 shadow-2xl">
+                        <div class="flex items-center justify-between mb-6 border-b border-slate-700 pb-4">
+                            <div class="flex space-x-2">
+                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            </div>
+                            <span class="text-xs text-slate-500 font-mono">strategy.json</span>
+                        </div>
+                        <div class="space-y-3 font-mono text-sm">
+                            <div class="flex">
+                                <span class="text-pink-500 w-8">01</span>
+                                <span class="text-purple-400">const</span> <span class="text-blue-400 ml-2">vision</span> <span class="text-white mx-2">=</span> <span class="text-green-400">"Future Proof"</span>;
+                            </div>
+                            <div class="flex">
+                                <span class="text-pink-500 w-8">02</span>
+                                <span class="text-purple-400">await</span> <span class="text-yellow-400 ml-2">CreativeMinds</span>.<span class="text-blue-300">build</span>({
+                            </div>
+                            <div class="flex pl-8">
+                                <span class="text-pink-500 w-8"></span>
+                                <span class="text-slate-300">strategy:</span> <span class="text-green-400">true</span>,
+                            </div>
+                            <div class="flex pl-8">
+                                <span class="text-pink-500 w-8"></span>
+                                <span class="text-slate-300">design:</span> <span class="text-green-400">"World Class"</span>,
+                            </div>
+                            <div class="flex pl-8">
+                                <span class="text-pink-500 w-8"></span>
+                                <span class="text-slate-300">scale:</span> <span class="text-green-400">"Global"</span>
+                            </div>
+                            <div class="flex">
+                                <span class="text-pink-500 w-8">06</span>
+                                });
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section id="services" class="relative z-10 py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">Our Expertise</h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">From napkin sketches to enterprise-grade deployment, we handle the entire product lifecycle.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="glass p-8 rounded-2xl hover:bg-white/5 transition-all group reveal">
+                    <div class="w-14 h-14 rounded-xl bg-blue-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-compass text-2xl text-blue-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Product Strategy & Design</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        We design intuitive, accessible interfaces that users love. We focus on friction-free user journeys and high-fidelity prototyping.
+                    </p>
+                    <ul class="text-sm text-slate-500 space-y-2">
+                        <li class="flex items-center"><i class="fas fa-check text-brand-accent mr-2"></i> User Research & Personas</li>
+                        <li class="flex items-center"><i class="fas fa-check text-brand-accent mr-2"></i> UX/UI Design</li>
+                        <li class="flex items-center"><i class="fas fa-check text-brand-accent mr-2"></i> Brand Identity</li>
+                    </ul>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="glass p-8 rounded-2xl hover:bg-white/5 transition-all group reveal border-t-2 border-brand-accent relative">
+                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-brand-accent text-white text-xs font-bold px-3 py-1 rounded-full">MOST POPULAR</div>
+                    <div class="w-14 h-14 rounded-xl bg-purple-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-layer-group text-2xl text-purple-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Engineering & Dev</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        Robust, scalable, and future-proof. We build software that powers businesses using modern stacks and secure architecture.
+                    </p>
+                    <ul class="text-sm text-slate-500 space-y-2">
+                        <li class="flex items-center"><i class="fas fa-check text-brand-accent mr-2"></i> Web & Mobile Apps</li>
+                        <li class="flex items-center"><i class="fas fa-check text-brand-accent mr-2"></i> Cloud Architecture</li>
+                        <li class="flex items-center"><i class="fas fa-check text-brand-accent mr-2"></i> DevOps & CI/CD</li>
+                    </ul>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="glass p-8 rounded-2xl hover:bg-white/5 transition-all group reveal">
+                    <div class="w-14 h-14 rounded-xl bg-green-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-brain text-2xl text-green-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Emerging Tech & AI</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        Leverage the latest technology to automate processes. We integrate LLMs and IoT to give you a competitive edge.
+                    </p>
+                    <ul class="text-sm text-slate-500 space-y-2">
+                        <li class="flex items-center"><i class="fas fa-check text-brand-accent mr-2"></i> Generative AI Integration</li>
+                        <li class="flex items-center"><i class="fas fa-check text-brand-accent mr-2"></i> Data Analytics</li>
+                        <li class="flex items-center"><i class="fas fa-check text-brand-accent mr-2"></i> IoT Connections</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TECH STACK SECTION (GRID TABLE) -->
+    <section id="stack" class="relative z-10 py-20 bg-slate-900/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-white mb-10 text-center reveal">Our Toolkit</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 reveal">
+                <!-- Web -->
+                <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                    <h4 class="text-white font-bold mb-4 flex items-center"><i class="fab fa-react mr-2 text-blue-400"></i> Web Dev</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-slate-700 rounded text-xs text-slate-300">React</span>
+                        <span class="px-2 py-1 bg-slate-700 rounded text-xs text-slate-300">Vue</span>
+                        <span class="px-2 py-1 bg-slate-700 rounded text-xs text-slate-300">Next.js</span>
+                        <span class="px-2 py-1 bg-slate-700 rounded text-xs text-slate-300">Node.js</span>
+                        <span class="px-2 py-1 bg-slate-700 rounded text-xs text-slate-300">PWA</span>
+                    </div>
+                </div>
+
+                <!-- Mobile -->
+                <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                    <h4 class="text-white font-bold mb-4 flex items-center"><i class="fas fa-mobile-alt mr-2 text-purple-400"></i> Mobile</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-slate-700 rounded text-xs text-slate-300">React Native</span>
+                        <span class="px-2 py-1 bg-slate-700 rounded text-xs text-slate-300">Flutter</span>
+                        <span class="px-2 py-1 bg-slate-700 rounded text-xs text-slate-300">Swift</span>
+                        <span class="px-2 py-1 bg-slate-700 rounded text-xs text-slate-300">Kotlin</span>
+                    </div>
+                </div>
+
+                <!-- Cloud -->
+                <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                    <h4 class="text-white font-bold mb-4 flex items-center"><i class="fas fa-cloud mr-2 text-yellow-400"></i> Backend/Cloud</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-slate-700 rounded text-xs text-slate-300">AWS</span>
+                        <span class="px-2 py-1 bg-slate-700 rounded text-xs text-slate-300">Azure</span>
+                        <span class="px-2 py-1 bg-slate-700 rounded text-xs text-slate-300">Google Cloud</span>
+                        <span class="px-2 py-1 bg-slate-700 rounded text-xs text-slate-300">Microservices</span>
+                    </div>
+                </div>
+
+                <!-- DevOps -->
+                <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                    <h4 class="text-white font-bold mb-4 flex items-center"><i class="fas fa-server mr-2 text-green-400"></i> DevOps</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-slate-700 rounded text-xs text-slate-300">Docker</span>
+                        <span class="px-2 py-1 bg-slate-700 rounded text-xs text-slate-300">Kubernetes</span>
+                        <span class="px-2 py-1 bg-slate-700 rounded text-xs text-slate-300">CI/CD</span>
+                        <span class="px-2 py-1 bg-slate-700 rounded text-xs text-slate-300">Terraform</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESS SECTION -->
+    <section id="process" class="relative z-10 py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-16 text-center reveal">How We Work</h2>
+            
+            <div class="relative">
+                <!-- Connecting Line (Desktop) -->
+                <div class="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-slate-800 -translate-y-1/2 z-0"></div>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
+                    <!-- Step 1 -->
+                    <div class="bg-brand-dark border border-slate-700 p-6 rounded-xl text-center reveal hover:border-brand-accent transition-colors">
+                        <div class="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-brand-accent text-white font-bold">1</div>
+                        <h3 class="text-xl text-white font-bold mb-2">Discovery</h3>
+                        <p class="text-sm text-slate-400">We listen, learn, and define the scope to solve the right problem.</p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="bg-brand-dark border border-slate-700 p-6 rounded-xl text-center reveal hover:border-brand-accent transition-colors" style="transition-delay: 100ms">
+                        <div class="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-brand-accent text-white font-bold">2</div>
+                        <h3 class="text-xl text-white font-bold mb-2">Sprint</h3>
+                        <p class="text-sm text-slate-400">2-week agile cycles delivering testable features constantly.</p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="bg-brand-dark border border-slate-700 p-6 rounded-xl text-center reveal hover:border-brand-accent transition-colors" style="transition-delay: 200ms">
+                        <div class="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-brand-accent text-white font-bold">3</div>
+                        <h3 class="text-xl text-white font-bold mb-2">Review</h3>
+                        <p class="text-sm text-slate-400">Real-time progress updates. No black boxes. Total transparency.</p>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="bg-brand-dark border border-slate-700 p-6 rounded-xl text-center reveal hover:border-brand-accent transition-colors" style="transition-delay: 300ms">
+                        <div class="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-brand-accent text-white font-bold">4</div>
+                        <h3 class="text-xl text-white font-bold mb-2">Launch</h3>
+                        <p class="text-sm text-slate-400">Smooth deployment, performance monitoring, and iteration.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT / FOOTER -->
+    <section id="contact" class="relative z-10 py-20 bg-gradient-to-b from-brand-dark to-black">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 reveal">Ready to build the future?</h2>
+            <p class="text-slate-400 mb-6 text-lg reveal">Don't let your idea remain just an idea. Partner with Creative Minds today.</p>
+            
+            <!-- PROMINENT EMAIL ADDRESS - NEW -->
+            <div class="text-lg text-white mb-10 reveal">
+                <span class="text-slate-400">Email us directly: </span>
+                <a href="mailto:helatinotenda70@gmail.com" class="font-semibold text-brand-accent hover:text-white transition-colors">
+                    helatinotenda70@gmail.com
+                </a>
+            </div>
+
+            <div class="glass p-8 rounded-2xl max-w-lg mx-auto mb-20 reveal text-left">
+                <form onsubmit="event.preventDefault(); document.getElementById('success-msg').classList.remove('hidden');">
+                    <div class="mb-4">
+                        <label class="block text-slate-400 text-sm mb-2">Your Email</label>
+                        <!-- Updated placeholder -->
+                        <input type="email" required class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition-colors" placeholder="e.g., yourname@example.com">
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-slate-400 text-sm mb-2">Project Details</label>
+                        <textarea rows="3" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition-colors" placeholder="Tell us about your vision..."></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-brand-accent hover:bg-brand-glow text-white font-bold py-3 rounded-lg transition-all shadow-lg shadow-brand-accent/20">
+                        Send Inquiry
+                    </button>
+                    <p id="success-msg" class="hidden text-green-400 text-sm mt-3 text-center">Thanks! We'll be in touch shortly.</p>
+                </form>
+            </div>
+        </div>
+
+        <footer class="border-t border-slate-800 pt-10 pb-6 text-center">
+            <div class="flex justify-center space-x-6 mb-6">
+                <a href="#" class="text-slate-500 hover:text-white text-xl"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-slate-500 hover:text-white text-xl"><i class="fab fa-github"></i></a>
+                <a href="#" class="text-slate-500 hover:text-white text-xl"><i class="fab fa-linkedin"></i></a>
+            </div>
+            <p class="text-slate-600 text-sm">&copy; 2025 Creative Minds Digital Solutions. All rights reserved.</p>
+        </footer>
+    </section>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when a link is clicked
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+
+        // Sticky Navbar effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-brand-dark/90', 'shadow-lg');
+            } else {
+                navbar.classList.remove('bg-brand-dark/90', 'shadow-lg');
+            }
+        });
+
+        // Scroll Reveal Animation
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        // Trigger once on load
+        reveal();
+    </script>
+</body>
+</html>
+
